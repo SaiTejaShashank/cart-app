@@ -108,11 +108,15 @@ decreaseQuantity=(prod)=>{
 deleteProduct=(id)=>{
   const {products}=this.state;
 
-  const items=products.filter((item)=>item.id!==id);
+  const docRef=this.db.collection('products').doc(id);
 
-  this.setState({
-      products:items
-  })
+  docRef.delete()
+        .then(()=>{
+          console.log('Deleted Successfully')
+        })
+        .catch((error)=>{
+          console.log('Error:',error)
+        })
 }
 
 getCartCount=()=>{
