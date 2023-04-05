@@ -15,6 +15,7 @@ class  App extends React.Component{
         products: [],
         loading:true
     }
+    this.db=firebase.firestore();
 }
 
 componentDidMount(){
@@ -128,7 +129,22 @@ getCartTotal=()=>{
   return cartTotal;
 }
 
-
+addProduct=()=>{
+  this.db
+      .collection('products')
+      .add({
+        img:'https://images.unsplash.com/photo-1563203369-26f2e4a5ccf7?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2370&q=80',
+        price:4999,
+        qty:23,
+        title:'apple',
+      })
+      .then((docRef)=>{
+        console.log(docRef);
+      })
+      .catch((error)=>{
+        console.log('Error :',error);
+      })
+}
 
 render(){
 
@@ -139,6 +155,9 @@ render(){
       <Cart products={products}  key={products.id} increaseQuantity={this.increaseQuantity} decreaseQuantity={this.decreaseQuantity} deleteProduct={this.deleteProduct}  />
       {loading && <h1>Loading Products...</h1>}
       <h1>Total:{this.getCartTotal()}</h1>
+
+
+      <button onClick={this.addProduct}>Add Products</button>
     </div>
   );
 }
