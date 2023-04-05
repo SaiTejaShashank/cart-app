@@ -71,30 +71,38 @@ increaseQuantity = (prod) => {
 
   const index=products.indexOf(prod);
 
-  products[index].qty+=1;
+  const docRef=this.db.collection('products').doc(products[index].id);
 
-  this.setState({
-      products:products
-      //products
-  });
+  docRef.update({
+    qty:products[index].qty+1,
+  })
+  .then(()=>{
+    console.log("updated Successfully");
+  })
+  .catch((error)=>{
+    console.log('Error:',error);
+  })
+
 }
 
 decreaseQuantity=(prod)=>{
 
 
-  if(prod.qty===0){
-      return;
-  }
   const {products}=this.state;
 
   const index=products.indexOf(prod);
 
-  products[index].qty-=1;
+  const docRef=this.db.collection('products').doc(products[index].id);
 
-  this.setState({
-      products:products
-      //products
-  });
+  docRef.update({
+    qty:products[index].qty-1,
+  })
+  .then(()=>{
+    console.log("updated Successfully");
+  })
+  .catch((error)=>{
+    console.log('Error:',error);
+  })
 }
 
 deleteProduct=(id)=>{
