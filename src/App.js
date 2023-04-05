@@ -45,6 +45,8 @@ componentDidMount(){
           firebase
           .firestore()
           .collection('products')
+          //where('price','==',999)
+          .orderBy('price')
           .onSnapshot((snapshot)=>{
             console.log(snapshot)
             snapshot.docs.map((doc)=>{
